@@ -1,0 +1,41 @@
+@function Gradients($deg, $color) {
+  @return linear-gradient($deg, rgba($color, 1), rgba($color, 0.7));
+}
+
+@function BoxShow($color) {
+  @return 0 0 10px 1px rgba($color, .7);
+}
+
+@mixin box-shadow {
+  box-shadow: 0 0 15px 0 rgba(0,0,0,0.1);
+}
+
+@mixin box-shadow-e {
+  box-shadow: 0 0 15px 0 rgba(0,0,0,0.3);
+}
+
+@mixin btn-primary {
+  border-radius: var(--border-radius-m);
+  background: linear-gradient(118deg, rgba(var(--color-primary), 1), rgba(var(--color-primary), 0.7));
+  color: rgba(var(--color-font-contrary), 1);
+}
+
+@mixin bg-primary {
+  background: linear-gradient(118deg, rgba(var(--color-primary), 1), rgba(var(--color-primary), 0.7));
+}
+
+.dialog-box {
+  border-radius: 12px;
+}
+
+.btn-primary {
+  @include btn-primary;
+}
+
+.bg-primary {
+  @include bg-primary;
+}
+
+.have-bg-color {
+  color: #ffffff;
+}
