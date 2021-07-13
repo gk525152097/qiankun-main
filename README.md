@@ -348,14 +348,21 @@ actions.setGlobalState({ ceshi: 1 })
 
 子应用跳主应用
 
-    主应用 暴露 跳转方法 并在子应用注册的实际 注入
+    原理：通过主应用路由跳转方式实现页面跳转 且 相较于 window.location.href 此方法 不会刷新页面
+
+    主应用 在子应用注册的实际 注入跳转方法
 
     子应用在加载的时候获取方法并作为全局方法调用
 
-    原理：通过主应用路由跳转方式实现页面跳转 且 相较于 window.location.href 此方法 不会刷新页面
+    export function jumpRouter (path, query) {
+      router.push({ path, query })
+    }
+
 
 子应用跳子应用 同上
 
-> 权限问题
-如果将 子应用菜单通过 vuex传给主应用 那么 就可以实现子应用管理自己的路由
-> 。。。
+> 页面路由跳转问题
+
+问题 子应用使用自身路由跳转时候 会导致页面刷新
+
+解决 主应用配置 子应用对应组件为keep-alive组件 并适应key来实现隔离
