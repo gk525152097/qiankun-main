@@ -5,18 +5,18 @@
         <el-form v-if="showSearch" label-position="top" label-width="80px" :model="searchForm" ref="searchForm" :rules="searchFormRules">
           <el-row :gutter="20">
             <el-col :span="6">
-              <el-form-item label="应用名称" prop="name">
-                <el-input v-model="searchForm.name"></el-input>
+              <el-form-item label="登陆账号" prop="account">
+                <el-input v-model="searchForm.account"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="项目名称" prop="appName">
-                <el-input v-model="searchForm.appName"></el-input>
+              <el-form-item label="用户名称" prop="username">
+                <el-input v-model="searchForm.username"></el-input>
               </el-form-item>
             </el-col>
             <el-col :span="6">
-              <el-form-item label="匹配地址" prop="entry">
-                <el-input v-model="searchForm.entry"></el-input>
+              <el-form-item label="用户角色" prop="role">
+                <el-input v-model="searchForm.role"></el-input>
               </el-form-item>
             </el-col>
           </el-row>
@@ -36,10 +36,9 @@
     </global-card>
     <global-card class="card">
       <el-table :data="tableData">
-        <el-table-column prop="name" label="应用名称"></el-table-column>
-        <el-table-column prop="appName" label="项目名称"></el-table-column>
-        <el-table-column prop="entry" label="应用地址"></el-table-column>
-        <el-table-column prop="activeRule" label="匹配路径"></el-table-column>
+        <el-table-column prop="account" label="账号"></el-table-column>
+        <el-table-column prop="username" label="名称"></el-table-column>
+        <el-table-column prop="role" label="角色"></el-table-column>
         <el-table-column fixed="right" label="操作">
           <template slot-scope="scope">
             <el-button type="text" size="small" @click="() => handleVisibleForm(scope.row)" >编辑</el-button>
@@ -74,7 +73,7 @@
 </template>
 
 <script>
-import { handlePageData, handleDelete, handleAdd, handleModify } from '@/api/system/childAppManage'
+import { handlePageData, handleDelete, handleAdd, handleModify } from '@/api/system/userManage'
 import mixin from '@/mixins/cTable'
 import ActionBox from './ActionBox'
 export default {

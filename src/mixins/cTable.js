@@ -6,11 +6,7 @@ export default {
       visibleForm: false,
       currentPage: 1,
       pageSize: 20,
-      searchForm: {
-        name: null,
-        region: null,
-        type: null
-      },
+      searchForm: {},
       searchFormRules: {},
       tableData: [],
       checkItem: {},

@@ -328,9 +328,6 @@ actions.setGlobalState({ ceshi: 1 })
     component: ChildPage
 }
 ```
-但是 会出现问题 就是 主应用tabs创建tab名称都时候 均为子应用名称 没有精确到子应用到菜单名称
-
-这部分 需要修改 tabs组件
 
 > 跳转问题
 
@@ -342,9 +339,9 @@ actions.setGlobalState({ ceshi: 1 })
 
 主应用跳子应用
 
-    在创建子应用页面时候配置 childapppath/* 以获取所有子应用页面
+    在创建子应用页面时候配置 childAppPath/* 以获取所有子应用页面
 
-    跳转则直接 childapppath/pagepath
+    跳转则直接 childAppPath/pagepath
 
 子应用跳主应用
 
@@ -357,7 +354,6 @@ actions.setGlobalState({ ceshi: 1 })
     export function jumpRouter (path, query) {
       router.push({ path, query })
     }
-
 
 子应用跳子应用 同上
 

@@ -15,10 +15,9 @@
         trigger="hover"
       >
         <span slot="reference" class="sub">说明</span>
-        <p>应用名称：接入应用的名称</p>
-        <p>项目名称：接入应用的项目名称</p>
-        <p>应用地址：接入应用的实际网络地址</p>
-        <p>匹配路径：主应用匹配子应用的匹配地址</p>
+        <p>登陆账号：登陆账号</p>
+        <p>用户名称：用户名称</p>
+        <p>用户角色：用户角色</p>
       </el-popover>
     </span>
     <span slot="footer" class="dialog-footer">
@@ -26,17 +25,14 @@
       <el-button type="primary" class="btn-primary" @click="handleOk">确 定</el-button>
     </span>
     <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-      <el-form-item label="应用名称" prop="name">
-        <el-input v-model.trim="form.name"></el-input>
+      <el-form-item label="登陆账号" prop="account">
+        <el-input v-model.trim="form.account"></el-input>
       </el-form-item>
-      <el-form-item label="项目名称" prop="appName">
-        <el-input v-model.trim="form.appName"></el-input>
+      <el-form-item label="用户名称" prop="username">
+        <el-input v-model.trim="form.username"></el-input>
       </el-form-item>
-      <el-form-item label="应用地址" prop="entry">
-        <el-input v-model.trim="form.entry"></el-input>
-      </el-form-item>
-      <el-form-item label="匹配路径" prop="activeRule">
-        <el-input v-model.trim="form.activeRule"></el-input>
+      <el-form-item label="用户角色" prop="role">
+        <el-input v-model.trim="form.role"></el-input>
       </el-form-item>
     </el-form>
   </el-dialog>
