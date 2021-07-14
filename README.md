@@ -362,3 +362,6 @@ actions.setGlobalState({ ceshi: 1 })
 问题 子应用使用自身路由跳转时候 会导致页面刷新
 
 解决 主应用配置 子应用对应组件为keep-alive组件 并适应key来实现隔离
+
+> 获取子应用菜单信息方式 耦合性高
+> vuex方式不能实现全局通信 应同时使用qiankun actions来处理全局发布

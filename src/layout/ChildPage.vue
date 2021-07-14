@@ -23,6 +23,9 @@ export default {
     ...mapMutations({
       SET_MENU_TREE: 'system/SET_MENU_TREE'
     }),
+    /**
+     * 加载子应用
+     */
     handleInitChildApp () {
       this.microApp = ''
       this.$nextTick(() => {
@@ -58,27 +61,38 @@ export default {
               this.$message.closeAll()
             }, 1000)
           })
-        /**
-         * 子应用 mountPromise
-         * 用于处理子应用菜单挂载到主应用菜单上
-         */
-        this.microApp.mountPromise
-          .then(res => {
-            // console.log(window.childAppList)
-            // console.log(this.$route.meta)
-            const { childAppList } = window
-            const { appName } = this.$route.meta
-            let store
-            for (let i = 0; i < childAppList.length; i++) {
-              if (childAppList[i].appName === appName) {
-                store = childAppList[i].store
-              }
-            }
-            const childMenu = store.state.system.menuTree
-            let menuTree = this.handleRoutePath(childMenu, appName)
-            this.SET_MENU_TREE(menuTree)
-          })
+        this.handleAppMountPromise()
       })
+    },
+    /**
+     * 处理子应用Mount回调
+     */
+    handleAppMountPromise () {
+      /**
+       * 子应用 mountPromise
+       * 用于处理子应用菜单挂载到主应用菜单上
+       */
+      this.microApp && this.microApp.mountPromise
+        .then(res => {
+          // console.log(window.childAppList)
+          // console.log(this.$route.meta)
+          /**
+           * todo
+           * 此方法获取子应用菜单信息
+           * 耦合性高 且 存在局限性
+           */
+          const { childAppList } = window
+          const { appName } = this.$route.meta
+          let store
+          for (let i = 0; i < childAppList.length; i++) {
+            if (childAppList[i].appName === appName) {
+              store = childAppList[i].store
+            }
+          }
+          const childMenu = store.state.system.menuTree
+          let menuTree = this.handleRoutePath(childMenu, appName)
+          this.SET_MENU_TREE(menuTree)
+        })
     },
     /**
      * 遍历所有项和子项 添加基础路由
@@ -105,7 +119,8 @@ export default {
     /**
      * 路由缓存 在激活后重新加载
      */
-    this.handleInitChildApp()
+    console.log('activated')
+    this.handleAppMountPromise()
   },
   deactivated () {
 
