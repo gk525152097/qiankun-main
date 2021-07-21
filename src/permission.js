@@ -45,10 +45,10 @@ router.beforeEach(async (to, from, next) => {
   // }
 
   // 没有用户信息
-  if (!store.state.system.username) {
-    next('/login')
-    return false
-  }
+  // if (!store.state.system.username) {
+  //   next('/login')
+  //   return false
+  // }
 
   /**
    * 请求用户主应用 子应用路由信息
@@ -76,7 +76,6 @@ router.beforeEach(async (to, from, next) => {
         }
       }
     })
-    console.log(menuList)
     const menuTree = createRoutes(transform(menuList))
 
     store.commit('system/SET_MAIN_APP_MENU', menuTree)
@@ -88,7 +87,7 @@ router.beforeEach(async (to, from, next) => {
       component: BaseLayout,
       redirect: menuList[0].path // 获取菜单第一个数据为默认跳转页面
     }
-    router.addRoute(enterRoute)
+    router.addRoute('主结构', enterRoute)
 
     // 添加应用路由 暂定主应用id === 0
     appList.filter(item => item.id !== 0).forEach((item, index) => {
@@ -117,6 +116,10 @@ router.beforeEach(async (to, from, next) => {
     // 添加容错路由
     router.addRoute({ path: '*', redirect: '/error', hidden: true })
 
+    if (to.path === '/' && !to.redirect) {
+      next(menuList[0].path)
+      return false
+    }
     next({...to, replace: true})
     return false
   }

@@ -24,7 +24,6 @@
     <div class="right">
       <div class="wrapper">
         <div class="header">
-          <Header />
           <TabsBar />
         </div>
         <div class="views">

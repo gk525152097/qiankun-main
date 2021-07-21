@@ -5,6 +5,11 @@ Vue.use(Router)
 
 export const routes = [
   {
+    path: '/',
+    name: '主结构',
+    component: () => import('@/layout/MainLayout')
+  },
+  {
     path: '/login',
     name: '登陆',
     component: () => import('@/views/login/index')

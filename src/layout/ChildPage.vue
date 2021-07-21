@@ -1,6 +1,7 @@
 <template>
   <div class="index">
-    <div id="container" />
+    <div :id="container" />
+    <div :id="container2" />
   </div>
 </template>
 
@@ -15,7 +16,9 @@ export default {
   props: {},
   data () {
     return {
-      microApp: ''
+      microApp: '',
+      container: '',
+      container2: ''
     }
   },
   computed: {},
@@ -33,7 +36,19 @@ export default {
           {
             name: this.$route.meta.appName,
             entry: this.$route.meta.entry,
-            container: '#container',
+            container: `#${this.container}`,
+            props: {
+              microStore: store, // 主应用store
+              childAppList: window.childAppList, // 子应用store挂载位置
+              jumpRouter: jumpRouter // 全局跳转方法
+            }
+          }
+        )
+        loadMicroApp(
+          {
+            name: this.$route.meta.appName,
+            entry: this.$route.meta.entry,
+            container: `#${this.container2}`,
             props: {
               microStore: store, // 主应用store
               childAppList: window.childAppList, // 子应用store挂载位置
@@ -111,6 +126,8 @@ export default {
   },
   created () {
     console.log('created')
+    this.container = `container${new Date().valueOf()}`
+    this.container2 = `container2${new Date().valueOf()}`
   },
   mounted () {
     this.handleInitChildApp()
