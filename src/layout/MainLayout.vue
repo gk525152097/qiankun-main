@@ -25,10 +25,15 @@ export default {
   },
   props: {},
   data () {
-    return {}
+    return {
+      routerTransition: 'zoom-fade'
+    }
   },
-
-  computed: {},
+  computed: {
+    handleKey () {
+      return this.$route.meta && this.$route.meta.appName ? this.$route.meta.appName : this.$route.fullPath
+    }
+  },
   watch: {},
   methods: {},
   created () {

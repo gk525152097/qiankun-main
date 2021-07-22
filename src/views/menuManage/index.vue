@@ -2,26 +2,30 @@
   <div class="index">
     <global-card>
       <el-tabs v-model="activeName" @tab-click="handleClick">
-        <el-tab-pane label="主应用" name="主应用" />
-        <el-tab-pane label="子应用A" name="子应用A" />
+        <el-tab-pane v-for="item in appList" :label="item.name" :name="item.name" :key="item.id"/>
       </el-tabs>
-      <el-button class="btn-primary" @click="() => handleVisibleForm()">+ 新增菜单</el-button>
-      <el-table
-        :data="tableData"
-        style="width: 100%;margin-bottom: 20px;"
-        row-key="id"
-        default-expand-all
-        :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
-        <el-table-column prop="date" label="日期"></el-table-column>
-        <el-table-column prop="name" label="姓名"></el-table-column>
-        <el-table-column prop="address" label="地址"></el-table-column>
-        <el-table-column prop="address" label="操作">
-          <template slot-scope="scope">
-            <el-button type="text" size="small" @click="() => handleVisibleForm(scope.row)">编辑</el-button>
-            <el-button type="text" size="small">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <div v-if="activeName === '' || activeName === appList[0].name">
+        <el-button class="btn-primary" @click="() => handleVisibleForm()">+ 新增菜单</el-button>
+        <el-table
+          :data="tableData"
+          style="width: 100%;margin-bottom: 20px;"
+          row-key="id"
+          default-expand-all
+          :tree-props="{children: 'children', hasChildren: 'hasChildren'}">
+          <el-table-column prop="date" label="日期"></el-table-column>
+          <el-table-column prop="name" label="姓名"></el-table-column>
+          <el-table-column prop="address" label="地址"></el-table-column>
+          <el-table-column prop="address" label="操作">
+            <template slot-scope="scope">
+              <el-button type="text" size="small" @click="() => handleVisibleForm(scope.row)">编辑</el-button>
+              <el-button type="text" size="small">删除</el-button>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
+      <div v-for="item in childAppList" :key="item.id">
+        <InitChildPage v-if="activeName === item.name" :app="item" />
+      </div>
     </global-card>
     <ActionBox
       :checkItem="checkItem"
@@ -33,17 +37,21 @@
 </template>
 
 <script>
+import InitChildPage from '@/components/InitChildPage'
 import ActionBox from './ActionBox'
 import mixin from '@/mixins/cTable'
+import { mapState } from 'vuex'
 export default {
   name: 'index',
   components: {
-    ActionBox
+    ActionBox,
+    InitChildPage
   },
   mixins: [mixin],
   props: {},
   data () {
     return {
+      microApp: '',
       activeName: '主应用',
       tableData: [{
         id: 1,
@@ -79,10 +87,21 @@ export default {
       }]
     }
   },
-  computed: {},
+  computed: {
+    ...mapState({
+      appList: state => state.system.appList
+    }),
+    childAppList () {
+      return this.appList.filter(item => item.id !== 0)
+    }
+  },
   watch: {},
   methods: {
-    handleClick (tab, event) {
+    /**
+     * 切换应用
+     * @param tab
+     */
+    handleClick (tab) {
       this.activeName = tab.name
     },
     handleAdd (record) {
@@ -94,6 +113,8 @@ export default {
   mounted () {
   },
   destroyed () {
+    if (this.microApp) this.microApp.unmount()
+    window.__CAPTRUE_PAGE__ = false
   }
 }
 </script>
@@ -101,5 +122,8 @@ export default {
 <style lang="scss" scoped>
 @import "~@/assets/scss/common";
 .index {
+  #container {
+    min-height: 200px;
+  }
 }
 </style>

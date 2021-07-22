@@ -23,6 +23,8 @@ const whiteList = [
 ] // 不重定向白名单
 
 router.beforeEach(async (to, from, next) => {
+  console.log('main-app')
+  console.log(to)
   // 加载条
   NProgress.start()
   // 切换浏览窗口名称
@@ -60,8 +62,6 @@ router.beforeEach(async (to, from, next) => {
    */
   // 没有路由
   if (!store.state.system.appList.length) {
-    console.log('main-app')
-    console.log(to)
     // 请求应用信息
     const appList = await handleApp()
     store.commit('system/SET_APP_LIST', appList)
@@ -82,7 +82,7 @@ router.beforeEach(async (to, from, next) => {
 
     // 添加入口
     const enterRoute = { // 通过动态菜单添加 并修改redirect
-      path: '/',
+      path: '/home',
       name: '主应用',
       component: BaseLayout,
       redirect: menuList[0].path // 获取菜单第一个数据为默认跳转页面
@@ -91,7 +91,7 @@ router.beforeEach(async (to, from, next) => {
 
     // 添加应用路由 暂定主应用id === 0
     appList.filter(item => item.id !== 0).forEach((item, index) => {
-      router.addRoute('主应用', {
+      router.addRoute('主结构', {
         path: `/${item.appName}*`,
         meta: {
           ...item,

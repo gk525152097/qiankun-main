@@ -6,15 +6,9 @@
          @mouseenter="!sideLock ? sideShow = true : null"
          @mouseleave="!sideLock ? sideShow = false : null"
       >
-        <div class="info-wrapper">
-          <div class="top-wrapper">
-            <div class="img"></div>
-            <div v-show="sideShow ? true : sideLock" class="btn" @click="handleChangeLock">
-              <i v-if="sideLock" class="el-icon-lock active"></i>
-              <i v-else class="el-icon-unlock"></i>
-            </div>
-          </div>
-          <div class="title">GKLIGUANG-QIANKUN</div>
+        <div v-show="sideShow ? true : sideLock" class="btn" @click="handleChangeLock">
+          <i v-if="sideLock" class="el-icon-lock icon active"></i>
+          <i v-else class="el-icon-unlock icon"></i>
         </div>
         <div :class="['slider-menu', sideLock ? null : (sideShow ? null : 'lock') ]">
           <SliderMenu :isCollapse="sideLock ? false : !sideShow"/>
@@ -110,6 +104,7 @@ export default {
       width: 60px;
     }
     .slider-bar {
+      width: 100%;
       padding: 12px;
       box-sizing: border-box;
       transition: all 0.3s linear 0.01s;
@@ -125,33 +120,15 @@ export default {
       &.show {
         width: 224px;
       }
-      .info-wrapper {
-        margin-bottom: 24px;
-        .top-wrapper {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          margin-bottom: 8px;
-          .img {
-            clear: right;
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            background: Gradients(118deg, var(--color-primary));
+      .btn {
+        float: right;
+        cursor: pointer;
+        .icon {
+          font-size: 16px;
+          color: #FFF;
+          &.active {
+            color: #409eff;
           }
-          .btn {
-            cursor: pointer;
-            .active {
-              color: #409eff;
-            }
-          }
-        }
-        .title {
-          overflow: hidden;
-          font-size: 20px;
-          font-weight: bold;
-          color: #ffffff;
-          font-family: cursive;
         }
       }
     }

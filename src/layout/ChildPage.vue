@@ -1,7 +1,6 @@
 <template>
   <div class="index">
-    <div :id="container" />
-    <div :id="container2" />
+    <div id="container" />
   </div>
 </template>
 
@@ -16,9 +15,7 @@ export default {
   props: {},
   data () {
     return {
-      microApp: '',
-      container: '',
-      container2: ''
+      microApp: ''
     }
   },
   computed: {},
@@ -36,19 +33,7 @@ export default {
           {
             name: this.$route.meta.appName,
             entry: this.$route.meta.entry,
-            container: `#${this.container}`,
-            props: {
-              microStore: store, // 主应用store
-              childAppList: window.childAppList, // 子应用store挂载位置
-              jumpRouter: jumpRouter // 全局跳转方法
-            }
-          }
-        )
-        loadMicroApp(
-          {
-            name: this.$route.meta.appName,
-            entry: this.$route.meta.entry,
-            container: `#${this.container2}`,
+            container: '#container',
             props: {
               microStore: store, // 主应用store
               childAppList: window.childAppList, // 子应用store挂载位置
@@ -91,43 +76,11 @@ export default {
         .then(res => {
           // console.log(window.childAppList)
           // console.log(this.$route.meta)
-          /**
-           * todo
-           * 此方法获取子应用菜单信息
-           * 耦合性高 且 存在局限性
-           */
-          const { childAppList } = window
-          const { appName } = this.$route.meta
-          let store
-          for (let i = 0; i < childAppList.length; i++) {
-            if (childAppList[i].appName === appName) {
-              store = childAppList[i].store
-            }
-          }
-          const childMenu = store.state.system.menuTree
-          let menuTree = this.handleRoutePath(childMenu, appName)
-          this.SET_MENU_TREE(menuTree)
         })
-    },
-    /**
-     * 遍历所有项和子项 添加基础路由
-     * @param children
-     * @param name 基础路由
-     */
-    handleRoutePath (children, appName) {
-      return children.map(item => {
-        return {
-          ...item,
-          path: `/${appName}${item.path}`,
-          children: item.children ? this.handleRoutePath(item.children, appName) : undefined
-        }
-      })
     }
   },
   created () {
     console.log('created')
-    this.container = `container${new Date().valueOf()}`
-    this.container2 = `container2${new Date().valueOf()}`
   },
   mounted () {
     this.handleInitChildApp()

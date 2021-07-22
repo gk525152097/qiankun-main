@@ -7,7 +7,8 @@ export const routes = [
   {
     path: '/',
     name: '主结构',
-    component: () => import('@/layout/MainLayout')
+    component: () => import('@/layout/MainLayout'),
+    redirect: '/home'
   },
   {
     path: '/login',
