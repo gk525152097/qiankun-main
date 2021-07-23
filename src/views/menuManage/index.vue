@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <global-card>
-      <el-tabs v-model="activeName" @tab-click="handleClick">
+      <el-tabs :value="activeName" @tab-click="handleClick">
         <el-tab-pane v-for="item in appList" :label="item.name" :name="item.name" :key="item.id"/>
       </el-tabs>
       <div v-if="activeName === '' || activeName === appList[0].name">
@@ -52,7 +52,7 @@ export default {
   data () {
     return {
       microApp: '',
-      activeName: '主应用',
+      activeName: '',
       preActiveName: '',
       tableData: [{
         id: 1,
@@ -103,22 +103,24 @@ export default {
      * @param tab
      */
     handleClick (tab) {
-      // this.preActiveName = `${this.activeName}`
-      // this.activeName = tab.name
-
-      console.log(this.preActiveName)
-      console.log(this.activeName)
+      if (this.activeName !== tab.name) {
+        this.preActiveName = this.activeName
+      }
+      this.activeName = tab.name
     },
     handleAdd (record) {
       console.log(record)
     },
     handleAppInitError () {
-      this.activeName = `${this.preActiveName}`
+      this.$nextTick(() => {
+        this.activeName = this.preActiveName
+      })
     }
   },
   created () {
   },
   mounted () {
+    this.activeName = this.appList[0].name
   },
   destroyed () {
     if (this.microApp) this.microApp.unmount()

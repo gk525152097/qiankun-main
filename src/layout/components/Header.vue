@@ -4,17 +4,12 @@
        <div class="left">
          <div class="img"></div>
          <div class="title">
-           <el-dropdown v-if="onlyApp">
-            <span class="title app">
-              乾坤-{{ activeAppName }}
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item v-for="(item, index) in appList" :key="index" @click.native="handleApp(item)">{{ item.name }}</el-dropdown-item>
-            </el-dropdown-menu>
-           </el-dropdown>
-           <span class="title app" v-else>
-             {{ activeAppName }}
-           </span>
+           乾坤
+         </div>
+         <div class="app">
+           <div :class="['item', activeApp === index ? 'active' : '']" v-for="(item, index) in appList" :key="index" @click="handleApp(item, index)">
+             <div>{{ item.name }}</div>
+           </div>
          </div>
        </div>
        <div class="right">
@@ -41,7 +36,7 @@ export default {
   props: {},
   data () {
     return {
-      activeAppName: ''
+      activeApp: 0
     }
   },
   computed: {
@@ -49,14 +44,23 @@ export default {
       appList: state => state.system.appList,
       mainAppMenu: state => state.system.mainAppMenu,
       username: state => state.system.username
-    }),
-    onlyApp () { // 只有一个应用的时候 不显示应用菜单 和 分隔信息
-      return !(this.appList.length <= 1)
-    }
+    })
   },
   watch: {
+    $route () {
+      this.handleActiveApp()
+    }
   },
   methods: {
+    handleActiveApp () {
+      for (let i = 1; i < this.appList.length; i++) {
+        if (this.$route.fullPath.indexOf(this.appList[i].activeRule) > -1) {
+          this.activeApp = i
+          break
+        }
+        this.activeApp = 0
+      }
+    },
     handleLogout () {
       console.log('handleLogout')
       this.$router.push({ path: '/login' })
@@ -64,20 +68,15 @@ export default {
     /**
      * 切换应用
      */
-    handleApp (app) {
-      console.log(app)
-      console.log(this.$router.getRoutes())
-      // if (app.activeRule === '/') {
-      //   this.$router.push({ path: '/childAppManage' })
-      //   return false
-      // }
+    handleApp (app, index) {
+      this.activeApp = index
       this.$router.push({ path: app.activeRule, mate: app })
     }
   },
   created () {
   },
   mounted () {
-    if (this.appList.length) this.activeAppName = this.appList[0].name
+    this.handleActiveApp()
   },
   destroyed () {
   }
@@ -103,7 +102,7 @@ export default {
     justify-content: space-between;
     .left {
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       .img {
         width: 36px;
         height: 36px;
@@ -118,8 +117,38 @@ export default {
         font-weight: bold;
         color: #ffffff;
         font-family: cursive;
-        &.app {
+        margin-right: 20px;
+      }
+      .app {
+        display: flex;
+        align-items: center;
+        .item {
           cursor: pointer;
+          padding: 12px;
+          margin: 12px 4px 12px 0;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          position: relative;
+          color: #ffffff;
+          &:before {
+            border-radius: 0 0 8px 8px;
+            transition: all 0.3s;
+            content: '';
+            position: absolute;
+            top: -12px;
+            left: 0;
+            width: 100%;
+            height: calc(100% + 24px);
+          }
+          &:hover, &.active {
+            div {
+              z-index: 1;
+            }
+            &:before {
+              background: #2e3357;
+            }
+          }
         }
       }
     }

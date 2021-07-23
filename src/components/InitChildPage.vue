@@ -54,12 +54,9 @@ export default {
             message: '子应用加载失败',
             type: 'error'
           })
-          this.$emit('handleAppInitError')
-          // sessionStorage.setItem('failChildAppPath', this.$route.fullPath)
-          // setTimeout(() => {
-          //   this.$router.back(-1)
-          //   this.$message.closeAll()
-          // }, 1000)
+          setTimeout(() => {
+            this.$emit('handleAppInitError')
+          }, 500)
         })
     }
   },
