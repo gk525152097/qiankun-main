@@ -24,7 +24,7 @@
         </el-table>
       </div>
       <div v-for="item in childAppList" :key="item.id">
-        <InitChildPage v-if="activeName === item.name" :app="item" />
+        <InitChildPage v-if="activeName === item.name" :app="item" @handleAppInitError="handleAppInitError"/>
       </div>
     </global-card>
     <ActionBox
@@ -53,6 +53,7 @@ export default {
     return {
       microApp: '',
       activeName: '主应用',
+      preActiveName: '',
       tableData: [{
         id: 1,
         date: '2016-05-02',
@@ -102,10 +103,17 @@ export default {
      * @param tab
      */
     handleClick (tab) {
-      this.activeName = tab.name
+      // this.preActiveName = `${this.activeName}`
+      // this.activeName = tab.name
+
+      console.log(this.preActiveName)
+      console.log(this.activeName)
     },
     handleAdd (record) {
       console.log(record)
+    },
+    handleAppInitError () {
+      this.activeName = `${this.preActiveName}`
     }
   },
   created () {

@@ -44,6 +44,23 @@ export default {
           container: `#${this.id}`
         })
       }
+      this.microApp.loadPromise
+        .then(res => {
+          // console.log(`${this.$route.meta.name} 加载成功`)
+        })
+        .catch(res => {
+          this.$message.closeAll()
+          this.$message({
+            message: '子应用加载失败',
+            type: 'error'
+          })
+          this.$emit('handleAppInitError')
+          // sessionStorage.setItem('failChildAppPath', this.$route.fullPath)
+          // setTimeout(() => {
+          //   this.$router.back(-1)
+          //   this.$message.closeAll()
+          // }, 1000)
+        })
     }
   },
   created () {
