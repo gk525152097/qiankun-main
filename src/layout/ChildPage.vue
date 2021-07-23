@@ -23,6 +23,18 @@ export default {
     ...mapMutations({
       SET_MENU_TREE: 'system/SET_MENU_TREE'
     }),
+    handleLoadFail () {
+      this.$message.closeAll()
+      this.$message({
+        message: '子应用加载失败',
+        type: 'error'
+      })
+      sessionStorage.setItem('failChildAppPath', this.$route.fullPath)
+      setTimeout(() => {
+        this.$router.back(-1)
+        this.$message.closeAll()
+      }, 1000)
+    },
     /**
      * 加载子应用
      */
@@ -50,33 +62,9 @@ export default {
             // console.log(`${this.$route.meta.name} 加载成功`)
           })
           .catch(res => {
-            this.$message.closeAll()
-            this.$message({
-              message: '子应用加载失败',
-              type: 'error'
-            })
-            sessionStorage.setItem('failChildAppPath', this.$route.fullPath)
-            setTimeout(() => {
-              this.$router.back(-1)
-              this.$message.closeAll()
-            }, 1000)
+            this.handleLoadFail()
           })
-        this.handleAppMountPromise()
       })
-    },
-    /**
-     * 处理子应用Mount回调
-     */
-    handleAppMountPromise () {
-      /**
-       * 子应用 mountPromise
-       * 用于处理子应用菜单挂载到主应用菜单上
-       */
-      this.microApp && this.microApp.mountPromise
-        .then(res => {
-          // console.log(window.childAppList)
-          // console.log(this.$route.meta)
-        })
     }
   },
   created () {
@@ -90,7 +78,10 @@ export default {
      * 路由缓存 在激活后重新加载
      */
     console.log('activated')
-    this.handleAppMountPromise()
+    if (this.microApp && this.microApp.getStatus() === 'LOADING_SOURCE_CODE') {
+      // 加载失败
+      this.handleLoadFail()
+    }
   },
   deactivated () {
 

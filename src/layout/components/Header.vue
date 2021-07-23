@@ -4,7 +4,7 @@
        <div class="left">
          <div class="img"></div>
          <div class="title">
-           乾坤
+           乾坤-微前端-结构框架
          </div>
          <div class="app">
            <div :class="['item', activeApp === index ? 'active' : '']" v-for="(item, index) in appList" :key="index" @click="handleApp(item, index)">
