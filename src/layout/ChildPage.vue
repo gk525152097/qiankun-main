@@ -51,6 +51,11 @@ export default {
               childAppList: window.childAppList, // 子应用store挂载位置
               jumpRouter: jumpRouter // 全局跳转方法
             }
+          },
+          {
+            sandbox: {
+              experimentalStyleIsolation: true
+            }
           }
         )
         /**
@@ -68,16 +73,15 @@ export default {
     }
   },
   created () {
-    console.log('created')
   },
   mounted () {
     this.handleInitChildApp()
   },
   activated () {
     /**
-     * 路由缓存 在激活后重新加载
+     * keep-alive组件
+     * 需要处理重新进来后 子应用加载失败不回退
      */
-    console.log('activated')
     if (this.microApp && this.microApp.getStatus() === 'LOADING_SOURCE_CODE') {
       // 加载失败
       this.handleLoadFail()

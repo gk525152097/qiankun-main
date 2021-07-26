@@ -66,6 +66,7 @@ router.beforeEach(async (to, from, next) => {
     const appList = await handleApp()
     store.commit('system/SET_APP_LIST', appList)
 
+    // todo 将主应用路由拆分出去
     // 请求第一个应用菜单 并转换成树
     let menuList = await handleAppMenu(appList[0] ? appList[0].id : '')
     menuList = menuList.map(item => {
@@ -85,7 +86,7 @@ router.beforeEach(async (to, from, next) => {
       path: '/home',
       name: '主应用',
       component: BaseLayout,
-      redirect: menuList[0].path // 获取菜单第一个数据为默认跳转页面
+      redirect: appList[0].activeRule !== '/' ? appList[0].activeRule : menuList[0].path // 获取菜单第一个数据为默认跳转页面
     }
     router.addRoute('主结构', enterRoute)
 

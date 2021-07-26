@@ -96,3 +96,8 @@ body {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.title {
+  font-size: 200px;
+  font-weight: bold;
+}
