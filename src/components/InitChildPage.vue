@@ -42,6 +42,10 @@ export default {
           name: app.appName,
           entry: `${app.entry}/${this.entry}`,
           container: `#${this.id}`
+        }, {
+          sandbox: {
+            experimentalStyleIsolation: true
+          }
         })
       }
       this.microApp.loadPromise

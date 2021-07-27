@@ -7,6 +7,7 @@ import router from './router'
 import element from 'element-ui'
 import store from './store'
 import GlobalCard from '@/components/GlobalCard'
+import globalAction from './qiankun'
 
 import './permission'
 import '@/utils/scrollBar'
@@ -20,6 +21,8 @@ import './assets/scss/theme.scss'
 Vue.use(element)
 Vue.use(Vuex)
 Vue.use(GlobalCard)
+
+Vue.prototype.$globalAction = globalAction // 乾坤通信
 
 Vue.config.productionTip = false
 window.childAppList = []

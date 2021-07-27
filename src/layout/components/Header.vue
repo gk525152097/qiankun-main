@@ -10,6 +10,9 @@
            <div :class="['item', activeApp === index ? 'active' : '']" v-for="(item, index) in appList" :key="index" @click="handleApp(item, index)">
              <div>{{ item.name }}</div>
            </div>
+           <div @click="() => $router.push({ path: '/iframe' })">
+             <div>iframe</div>
+           </div>
          </div>
        </div>
        <div class="right">

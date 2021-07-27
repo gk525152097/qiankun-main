@@ -102,6 +102,14 @@ router.beforeEach(async (to, from, next) => {
         component: ChildPage
       })
     })
+    router.addRoute('主应用', {
+      path: `/iframe`,
+      meta: {
+        keepAlive: true
+      },
+      name: 'iframe',
+      component: () => import('./views/iframe/index')
+    })
 
     // 主应用 额外添加菜单信息 暂定主应用id === 0
     if (appList[0] && appList[0].id === 0) {
@@ -138,4 +146,5 @@ router.onError(error => {
     path: '/error',
     query: { type: 404 }
   })
+  NProgress.done()
 })
