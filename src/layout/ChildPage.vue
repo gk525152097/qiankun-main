@@ -6,8 +6,6 @@
 
 <script>
 import { loadMicroApp } from 'qiankun'
-import store from '@/store'
-import { mapMutations } from 'vuex'
 import { jumpRouter } from '@/utils/jumpRouter'
 export default {
   name: 'ChildPage',
@@ -20,9 +18,9 @@ export default {
   },
   computed: {},
   methods: {
-    ...mapMutations({
-      SET_MENU_TREE: 'system/SET_MENU_TREE'
-    }),
+    /**
+     * 处理子应用加载失败
+     */
     handleLoadFail () {
       this.$message.closeAll()
       this.$message({
@@ -46,10 +44,10 @@ export default {
           entry: this.$route.meta.entry,
           container: '#container',
           props: {
-            globalState: store.state.global, // 主应用store的global 遵守数据单向 不允许子应用直接修改主应用数据
-            setGlobalState: data => store.commit('global/HANDLE_DATA', data),
-            childAppList: window.childAppList, // 子应用store挂载位置
-            jumpRouter: jumpRouter // 全局跳转方法
+            globalState: this.$store.state.global, // 主应用store的global 遵守数据单向 不允许子应用直接修改主应用数据
+            setGlobalState: data => this.$store.dispatch('global/handleData', data),
+            jumpRouter: jumpRouter, // 全局跳转方法
+            childAppList: window.childAppList // 子应用store挂载位置
           }
         }, {
           sandbox: {

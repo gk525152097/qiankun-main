@@ -9,18 +9,17 @@ export default {
   name: 'index',
   components: {},
   props: {},
-  data() {
-      return {}
+  data () {
+    return {}
   },
-
   computed: {},
   watch: {},
   methods: {},
-  created() {
+  created () {
   },
-  mounted() {
+  mounted () {
   },
-  destroyed() {
+  destroyed () {
   }
 }
 </script>

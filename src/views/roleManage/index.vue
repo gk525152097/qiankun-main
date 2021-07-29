@@ -84,8 +84,6 @@ export default {
      * 修改
      */
     handleModify (formData) {
-      console.log(formData)
-      console.log(this.checkItem)
       // handleModify()
       //   .then(res => console.log(res))
       //   .catch(res => console.log(res))
@@ -94,7 +92,6 @@ export default {
      * 新增
      */
     handleAdd (formData) {
-      console.log(formData)
       // handleAdd()
       //   .then(res => console.log(res))
       //   .catch(res => console.log(res))

@@ -1,3 +1,4 @@
+import globalAction from '@/qiankun'
 const global = {
   namespaced: true,
 
@@ -7,13 +8,18 @@ const global = {
 
   mutations: {
     HANDLE_DATA: (state, data) => {
-      state.globalData = {
-        ...state.globalData,
-        ...data
-      }
+      state.globalData = data
     }
   },
   actions: {
+    handleData ({ state, commit }, data) {
+      const newData = {
+        ...state.globalData,
+        ...data
+      }
+      commit('HANDLE_DATA', newData)
+      globalAction.setGlobalState(newData)
+    }
   }
 }
 

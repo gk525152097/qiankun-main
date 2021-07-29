@@ -138,7 +138,6 @@ export default {
      * 查询
      */
     handlePageData () {
-      console.log(this.searchForm)
       handlePageData({
         ...this.searchForm,
         pageSize: this.pageSize,

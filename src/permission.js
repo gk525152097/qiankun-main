@@ -23,8 +23,8 @@ const whiteList = [
 ] // 不重定向白名单
 
 router.beforeEach(async (to, from, next) => {
-  console.log('main-app')
-  console.log(to)
+  // console.log('main-app')
+  // console.log(to)
   // 加载条
   NProgress.start()
   // 切换浏览窗口名称
@@ -102,7 +102,7 @@ router.beforeEach(async (to, from, next) => {
         component: ChildPage
       })
     })
-    router.addRoute('主应用', {
+    router.addRoute('主结构', {
       path: `/iframe`,
       meta: {
         keepAlive: true

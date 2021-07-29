@@ -6,6 +6,7 @@
 
 <script>
 import { loadMicroApp } from 'qiankun'
+import { jumpRouter } from '@/utils/jumpRouter'
 export default {
   name: 'InitChildPage',
   components: {},
@@ -39,9 +40,15 @@ export default {
         if (this.microApp) this.microApp.unmount()
         this.microApp = ''
         this.microApp = loadMicroApp({
-          name: app.appName,
+          name: `page-${app.appName}`,
           entry: `${app.entry}/${this.entry}`,
-          container: `#${this.id}`
+          container: `#${this.id}`,
+          props: {
+            globalState: this.$store.state.global, // 主应用store的global 遵守数据单向 不允许子应用直接修改主应用数据
+            setGlobalState: data => this.$store.dispatch('global/handleData', data),
+            jumpRouter: jumpRouter, // 全局跳转方法
+            childAppList: window.childAppList // 子应用store挂载位置
+          }
         }, {
           sandbox: {
             experimentalStyleIsolation: true

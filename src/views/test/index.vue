@@ -20,8 +20,8 @@ export default {
       this.$globalAction.setGlobalState({ info: 2 })
     },
     handleVuex () {
-      this.$store.commit('global/HANDLE_DATA', { data: 2 })
-    },
+      this.$store.dispatch('global/handleData', { data: 2 })
+    }
   },
   created () {
   },

@@ -1,10 +1,6 @@
 import { initGlobalState } from 'qiankun'
 
-const initialState = {
-  // 这里写初始化数据
-  test: 1,
-  ceshi: 0
-}
+const initialState = {}
 
 // 初始化 state
 const globalAction = initGlobalState(initialState)
