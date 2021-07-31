@@ -1,8 +1,22 @@
 <template>
-  <div class="TabsBar" v-show="show">
-    <el-tabs v-model="activeTab" type="card" closable @tab-remove="handleRemoveTab" @tab-click="handleLink">
-      <el-tab-pane v-for="item in tabsList" :key="item.path" :label="item.name" :name="item.path" :value="item"/>
-    </el-tabs>
+  <div class="TabsBar" ref="TabsBar">
+    <div class="tab-wrapper">
+      <el-tabs class="tab" v-model="activeTab" type="card" closable @tab-remove="handleRemoveTab" @tab-click="handleLink" >
+        <el-tab-pane v-for="item in tabsList" :key="item.path" :label="item.name" :name="item.path" :value="item" />
+      </el-tabs>
+    </div>
+    <div class="action-wrapper">
+      <el-dropdown>
+        <span class="el-dropdown-link">
+          <i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item @click.native="handleRemoveTab(activeTab)">关闭</el-dropdown-item>
+          <el-dropdown-item @click.native="handleRemoveOther(activeTab)">关闭其他</el-dropdown-item>
+          <el-dropdown-item @click.native="handleRemoveAll()">关闭全部</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
   </div>
 </template>
 
@@ -15,8 +29,7 @@ export default {
   data () {
     return {
       activeTab: '',
-      tabsList: [],
-      show: true
+      tabsList: []
     }
   },
   computed: {
@@ -26,7 +39,6 @@ export default {
   },
   watch: {
     $route () {
-      console.log(this.$route)
       this.handleAddTab(this.$route)
     }
   },
@@ -51,7 +63,6 @@ export default {
      */
     handleAddTab (route) {
       if (route.meta.mainRoute) {
-        this.show = true
         const pathList = this.tabsList.map(item => item.path)
         if (!pathList.includes(route.path)) {
           this.tabsList = [...this.tabsList, { name: route.name, path: route.path }]
@@ -59,9 +70,18 @@ export default {
         this.handleRouteInfo()
         this.activeTab = route.path
         sessionStorage.setItem('mainTabsList', JSON.stringify(this.tabsList))
-      } else {
-        this.show = false
       }
+    },
+    handleRemoveOther () {
+      let list = this.tabsList.filter(item => item.path !== this.activeTab)
+      list.forEach(item => {
+        this.handleRemoveTab(item.path)
+      })
+    },
+    handleRemoveAll () {
+      this.tabsList.forEach(item => {
+        this.handleRemoveTab(item.path)
+      })
     },
     /**
      * 删除标签
@@ -117,35 +137,44 @@ export default {
 
 <style lang="scss" scoped>
 .TabsBar {
-    padding-bottom: 12px;
-    >>> .el-tabs__nav-next {
-      line-height: 24px;
-    }
-    >>> .el-tabs__nav-prev {
-      line-height: 24px;
-    }
-    >>> .el-tabs.el-tabs--card.el-tabs--top {
-      height: 24px;
-    }
-    >>> .el-tabs--card>.el-tabs__header {
-      border: none;
-    }
-    >>> .el-tabs--card>.el-tabs__header .el-tabs__nav {
-      border: none;
-    }
-    >>> .el-tabs__item {
-      border: 1px solid #409eff !important;
-      border-radius: 4px !important;
-      height: 24px;
-      line-height: 24px;
-      padding: 0 8px !important;
-      margin-right: 8px;
-      color: #409eff;
-      background: rgba(255,255,255, 1);
-    }
-    >>> .el-tabs__item.is-active {
-      background: linear-gradient(118deg, #409eff, #409eff99) !important;
-      color: rgba(255,255,255, 1) !important;
-    }
+  padding-bottom: 12px;
+  display: flex;
+  .tab-wrapper {
+    width: calc(100% - 24px);
+    flex: 1;
   }
+  .action-wrapper {
+    display: flex;
+    align-items: center;
+  }
+  >>> .el-tabs__nav-next {
+    line-height: 24px;
+  }
+  >>> .el-tabs__nav-prev {
+    line-height: 24px;
+  }
+  >>> .el-tabs.el-tabs--card.el-tabs--top {
+    height: 24px;
+  }
+  >>> .el-tabs--card>.el-tabs__header {
+    border: none;
+  }
+  >>> .el-tabs--card>.el-tabs__header .el-tabs__nav {
+    border: none;
+  }
+  >>> .el-tabs__item {
+    border: 1px solid #409eff !important;
+    border-radius: 4px !important;
+    height: 24px;
+    line-height: 24px;
+    padding: 0 8px !important;
+    margin-right: 8px;
+    color: #409eff;
+    background: rgba(255,255,255, 1);
+  }
+  >>> .el-tabs__item.is-active {
+    background: linear-gradient(118deg, #409eff, #409eff99) !important;
+    color: rgba(255,255,255, 1) !important;
+  }
+}
 </style>
