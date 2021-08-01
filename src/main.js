@@ -25,7 +25,6 @@ Vue.use(GlobalCard)
 Vue.prototype.$globalAction = globalAction // 乾坤通信
 
 Vue.config.productionTip = false
-window.childAppList = []
 
 /* eslint-disable no-new */
 new Vue({

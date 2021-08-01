@@ -2,7 +2,7 @@
   <div class="index">
     <global-card>
       <el-tabs :value="activeName" @tab-click="handleClick">
-        <el-tab-pane v-for="item in appList" :label="item.name" :name="item.name" :key="item.id"/>
+        <el-tab-pane v-for="item in appList" :label="item.name" :name="item.name" :key="item.id" :info="item"/>
       </el-tabs>
       <div v-if="activeName === '' || activeName === appList[0].name">
         <el-button class="btn-primary" @click="() => handleVisibleForm()">+ 新增菜单</el-button>
@@ -24,7 +24,12 @@
         </el-table>
       </div>
       <div v-for="item in childAppList" :key="item.id">
-        <InitChildPage v-if="activeName === item.name" :app="item" @handleAppInitError="handleAppInitError"/>
+        <InitChildPage
+          v-if="activeName === item.name"
+          :app="item"
+          @handleAppInitError="handleAppInitError"
+          @handleChangeRoute="handleChangeRoute"
+        />
       </div>
     </global-card>
     <ActionBox
@@ -51,6 +56,7 @@ export default {
   props: {},
   data () {
     return {
+      checkItem: {},
       microApp: '',
       activeName: '',
       preActiveName: '',
@@ -103,10 +109,18 @@ export default {
      * @param tab
      */
     handleClick (tab) {
+      this.checkItem = this.appList[tab.index]
+      if (this.checkItem.id === 0) {
+        this.$router.replace({ path: this.basePath })
+      }
+      window._CHIlD_BASE_PATH__ = `${this.basePath}/page-${this.checkItem.appName}`
       if (this.activeName !== tab.name) {
         this.preActiveName = this.activeName
       }
       this.activeName = tab.name
+    },
+    handleChangeRoute () {
+      this.$router.replace({ path: `${this.basePath}/page-${this.checkItem.appName}/menuManage` })
     },
     handleAdd (record) {
       console.log(record)
@@ -118,13 +132,12 @@ export default {
     }
   },
   created () {
+    this.basePath = this.$route.path.split('*')[0] // 获取当前页面基础路由
   },
   mounted () {
     this.activeName = this.appList[0].name
   },
   destroyed () {
-    if (this.microApp) this.microApp.unmount()
-    window.__CAPTRUE_PAGE__ = false
   }
 }
 </script>

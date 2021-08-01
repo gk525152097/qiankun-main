@@ -2,7 +2,7 @@
   <div class="TabsBar" ref="TabsBar">
     <div class="tab-wrapper">
       <el-tabs class="tab" v-model="activeTab" type="card" closable @tab-remove="handleRemoveTab" @tab-click="handleLink" >
-        <el-tab-pane v-for="item in tabsList" :key="item.path" :label="item.name" :name="item.path" :value="item" />
+        <el-tab-pane v-for="item in tabsList" :key="item.name" :label="item.name" :name="item.name" :value="item" />
       </el-tabs>
     </div>
     <div class="action-wrapper">
@@ -64,11 +64,12 @@ export default {
     handleAddTab (route) {
       if (route.meta.mainRoute) {
         const pathList = this.tabsList.map(item => item.path)
-        if (!pathList.includes(route.path)) {
+        const nameList = this.tabsList.map(item => item.name)
+        if (!pathList.includes(route.path) && !nameList.includes(route.name)) {
           this.tabsList = [...this.tabsList, { name: route.name, path: route.path }]
         }
         this.handleRouteInfo()
-        this.activeTab = route.path
+        this.activeTab = route.name
         sessionStorage.setItem('mainTabsList', JSON.stringify(this.tabsList))
       }
     },

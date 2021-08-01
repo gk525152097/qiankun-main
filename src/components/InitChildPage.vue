@@ -36,14 +36,14 @@ export default {
       this.microApp = ''
       const app = this.app
       if (app.activeRule !== '/') {
-        window.__CAPTRUE_PAGE__ = true
         if (this.microApp) this.microApp.unmount()
         this.microApp = ''
         this.microApp = loadMicroApp({
           name: `page-${app.appName}`,
-          entry: `${app.entry}/${this.entry}`,
+          entry: `${app.entry}`,
           container: `#${this.id}`,
           props: {
+            singlePage: true,
             globalState: this.$store.state.global, // 主应用store的global 遵守数据单向 不允许子应用直接修改主应用数据
             setGlobalState: data => this.$store.dispatch('global/handleData', data),
             jumpRouter: jumpRouter // 全局跳转方法
@@ -56,7 +56,7 @@ export default {
       }
       this.microApp.loadPromise
         .then(res => {
-          // console.log(`${this.$route.meta.name} 加载成功`)
+          this.$emit('handleChangeRoute')
         })
         .catch(res => {
           this.$message.closeAll()
@@ -68,6 +68,10 @@ export default {
             this.$emit('handleAppInitError')
           }, 500)
         })
+      this.microApp.mountPromise
+        .then(res => {
+          window._CHIlD_BASE_PATH__ = ''
+        })
     }
   },
   created () {
@@ -78,8 +82,7 @@ export default {
     })
   },
   destroyed () {
-    this.microApp.unmount()
-    window.__CAPTRUE_PAGE__ = false
+    // this.microApp.unmount()
   }
 }
 </script>

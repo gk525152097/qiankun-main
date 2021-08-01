@@ -39,6 +39,7 @@ export default {
     handleInitChildApp () {
       this.microApp = ''
       this.$nextTick(() => {
+        window._CHIlD_BASE_PATH__ = `/${this.$route.meta.appName}`
         this.microApp = loadMicroApp({
           name: this.$route.meta.appName,
           entry: this.$route.meta.entry,
@@ -46,8 +47,7 @@ export default {
           props: {
             globalState: this.$store.state.global, // 主应用store的global 遵守数据单向 不允许子应用直接修改主应用数据
             setGlobalState: data => this.$store.dispatch('global/handleData', data),
-            jumpRouter: jumpRouter, // 全局跳转方法
-            childAppList: window.childAppList // 子应用store挂载位置
+            jumpRouter: jumpRouter // 全局跳转方法
           }
         }, {
           sandbox: {
@@ -64,6 +64,10 @@ export default {
           })
           .catch(res => {
             this.handleLoadFail()
+          })
+        this.microApp.mountPromise
+          .then(res => {
+            console.log(window._CHIlD_BASE_PATH__ = '')
           })
       })
     }
