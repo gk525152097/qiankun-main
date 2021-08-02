@@ -194,6 +194,18 @@ devServer: {
 
 > 通信问题
 
+解决方式
+
+    通过vuex结合qiankun API方式
+    将主应用vuex global模块注册到子应用中
+    修改主应用vuex的action方法 在修改state的同时 使用qiankun API进行全局通信
+    将action方法注册到子应用中 子应用只通过action进行数据修改 以实现 全局状态和通信
+
+    子应用中 同样使用vuex来存储全局状态 在监听到全局数据变化时 修改状态以达到 数据双向
+    react项目可以用dva来实现
+    angular 未知
+    h5项目 比较麻烦 需要对页面状态进行处理 因为在其他页面激活的时候 h5页面不渲染 无法获取dom
+
 vuex方式
 
     主应用通过注册子应用时候传入vuex实例 和 window对象 实现子应用修改主应用数据
