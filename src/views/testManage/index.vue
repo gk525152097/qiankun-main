@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'index',
   components: {},
@@ -33,8 +34,21 @@ export default {
       drawer: false
     }
   },
-  computed: {},
-  watch: {},
+  computed: {
+    ...mapState({
+      globalData: state => state.global.globalData
+    })
+  },
+  watch: {
+    globalData: {
+      handler: (val, oldVal) => {
+        console.log('主应用')
+        console.log(val)
+        console.log(oldVal)
+      },
+      deep: true
+    }
+  },
   methods: {
     handleRouter (code) {
       this.$router.push({ path: `/app-vue-demo${code}` })
@@ -46,6 +60,7 @@ export default {
   created () {
   },
   mounted () {
+    console.log(this.globalData)
   },
   destroyed () {
   }

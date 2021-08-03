@@ -6,10 +6,7 @@ const initialState = {}
 const globalAction = initGlobalState(initialState)
 
 globalAction.onGlobalStateChange((state, prev) => { // 监听公共状态的变化
-  console.log('主应用: 变更前')
-  console.log(prev)
-  console.log('主应用: 变更后')
-  console.log(state)
+  console.log('主应用 qiankun 响应')
 })
 
 export default globalAction

@@ -3,7 +3,9 @@ const global = {
   namespaced: true,
 
   state: {
-    globalData: {}
+    globalData: {
+      id: 1
+    }
   },
 
   mutations: {
