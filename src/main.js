@@ -15,7 +15,7 @@ import '@/utils/scrollBar'
 import 'element-ui/lib/theme-chalk/index.css'
 import './assets/css/reset.css'
 import './assets/scss/vueTransition.scss'
-import './assets/scss/common.scss'
+// import './assets/scss/common.scss' // 全局引入
 import './assets/scss/theme.scss'
 
 Vue.use(element)

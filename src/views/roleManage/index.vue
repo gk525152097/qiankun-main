@@ -127,7 +127,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/assets/scss/common";
 .index {
   .card {
     margin-bottom: 12px;

@@ -57,9 +57,11 @@ export default {
   data () {
     return {
       checkItem: {},
-      microApp: '',
       activeName: '',
       preActiveName: '',
+      index: 0,
+      preIndex: 0,
+      microApp: '',
       tableData: [{
         id: 1,
         date: '2016-05-02',
@@ -116,8 +118,10 @@ export default {
       window._CHIlD_BASE_PATH__ = `${this.basePath}/page-${this.checkItem.appName}`
       if (this.activeName !== tab.name) {
         this.preActiveName = this.activeName
+        this.preIndex = this.index
       }
       this.activeName = tab.name
+      this.index = tab.index
     },
     handleChangeRoute () {
       this.$router.replace({ path: `${this.basePath}/page-${this.checkItem.appName}/menuManage` })
@@ -127,7 +131,7 @@ export default {
     },
     handleAppInitError () {
       this.$nextTick(() => {
-        this.activeName = this.preActiveName
+        this.handleClick({ index: this.preIndex, name: this.preActiveName })
       })
     }
   },
@@ -143,7 +147,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/assets/scss/common";
+
 .index {
   #container {
     min-height: 200px;

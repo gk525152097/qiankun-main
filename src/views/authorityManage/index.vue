@@ -142,7 +142,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/assets/scss/common";
 .index {
   .inner-box {
     border-radius: 12px;

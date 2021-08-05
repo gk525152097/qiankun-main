@@ -11,6 +11,7 @@
     </div>
     <div class="item">
       <div>通信测试</div>
+      <div>{{ JSON.stringify(globalData) }}</div>
       <el-button @click="handleVuex" type="primary">全局通信</el-button>
     </div>
 
@@ -44,7 +45,6 @@ export default {
       handler: (val, oldVal) => {
         console.log('主应用')
         console.log(val)
-        console.log(oldVal)
       },
       deep: true
     }

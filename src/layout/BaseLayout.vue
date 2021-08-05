@@ -86,7 +86,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/assets/scss/common";
+
 .BaseLayout {
   width: 100%;
   height: 100%;

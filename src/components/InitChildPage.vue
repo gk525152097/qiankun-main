@@ -82,7 +82,7 @@ export default {
     })
   },
   destroyed () {
-    // this.microApp.unmount()
+    this.microApp.unmount()
   }
 }
 </script>

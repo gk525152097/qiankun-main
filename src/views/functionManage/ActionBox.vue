@@ -191,7 +191,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/assets/scss/common";
+
 >>> .el-radio-button__orig-radio:checked+.el-radio-button__inner {
   @include bg-primary;
 }
