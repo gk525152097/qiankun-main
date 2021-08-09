@@ -77,11 +77,13 @@ export default {
   created () {
   },
   mounted () {
+    this.$NProgress.start()
     this.$nextTick(() => {
       this.handleApp()
     })
   },
   destroyed () {
+    this.$NProgress.done()
     this.microApp.unmount()
   }
 }

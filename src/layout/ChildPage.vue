@@ -13,7 +13,8 @@ export default {
   props: {},
   data () {
     return {
-      microApp: ''
+      microApp: '',
+      loading: {}
     }
   },
   computed: {},
@@ -29,6 +30,7 @@ export default {
       })
       sessionStorage.setItem('failChildAppPath', this.$route.fullPath)
       setTimeout(() => {
+        this.loading.close()
         this.$router.back(-1)
         this.$message.closeAll()
       }, 1000)
@@ -51,7 +53,7 @@ export default {
           }
         }, {
           sandbox: {
-            experimentalStyleIsolation: true
+            // experimentalStyleIsolation: true
           }
         })
         /**
@@ -59,15 +61,15 @@ export default {
          * 用于处理子应用加载结果
          */
         this.microApp.loadPromise
-          .then(res => {
-            // console.log(`${this.$route.meta.name} 加载成功`)
+          .then(() => {
+            this.loading.close()
           })
-          .catch(res => {
+          .catch(() => {
             this.handleLoadFail()
           })
         this.microApp.mountPromise
           .then(res => {
-            console.log(window._CHIlD_BASE_PATH__ = '')
+            window._CHIlD_BASE_PATH__ = ''
           })
       })
     }
@@ -75,6 +77,12 @@ export default {
   created () {
   },
   mounted () {
+    this.loading = this.$loading({
+      lock: true,
+      text: '加载中……',
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)'
+    })
     this.handleInitChildApp()
   },
   activated () {

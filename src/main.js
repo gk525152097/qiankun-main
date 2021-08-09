@@ -8,11 +8,13 @@ import element from 'element-ui'
 import store from './store'
 import GlobalCard from '@/components/GlobalCard'
 import globalAction from './qiankun'
+import NProgress from 'nprogress' // progress bar
 
 import './permission'
 import '@/utils/scrollBar'
 
 import 'element-ui/lib/theme-chalk/index.css'
+import 'nprogress/nprogress.css' // progress bar style
 import './assets/css/reset.css'
 import './assets/scss/vueTransition.scss'
 // import './assets/scss/common.scss' // 全局引入
@@ -23,6 +25,7 @@ Vue.use(Vuex)
 Vue.use(GlobalCard)
 
 Vue.prototype.$globalAction = globalAction // 乾坤通信
+Vue.prototype.$NProgress = NProgress
 
 Vue.config.productionTip = false
 

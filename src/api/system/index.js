@@ -23,7 +23,7 @@ const appList = [
   { id: 0, name: '主应用', appName: 'app-main', entry: '/', activeRule: '/' },
   { id: 1, name: '应用A', appName: 'app-vue-demo1', entry: '//localhost:9001', activeRule: '/app-vue-demo1/' },
   { id: 2, name: '应用B', appName: 'app-vue-demo2', entry: '//localhost:9002', activeRule: '/app-vue-demo2/' },
-  { id: 3, name: '应用C', appName: 'app-vue-demo3', entry: '//localhost:63342/qiankun-h5/index.html?_ijt=1t3k0ddscb7tq7egrl3f3qk767', activeRule: '/app-vue-demo3/' }
+  { id: 3, name: '应用C', appName: 'jeecg', entry: '//localhost:3000', activeRule: '/jeecg/' }
 ]
 
 const userInfo = {

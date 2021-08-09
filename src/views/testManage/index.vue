@@ -15,6 +15,12 @@
       <el-button @click="handleVuex" type="primary">全局通信</el-button>
     </div>
 
+    <div class="item">
+      <div>NProgress测试</div>
+      <el-button @click="handleNProgress(1)" type="primary">NProgress 开始</el-button>
+      <el-button @click="handleNProgress(0)" type="primary">NProgress 关闭</el-button>
+    </div>
+
     <el-drawer
       title="主应用"
       :visible.sync="drawer"
@@ -50,6 +56,13 @@ export default {
     }
   },
   methods: {
+    handleNProgress (code) {
+      if (code) {
+        this.$NProgress.start()
+      } else {
+        this.$NProgress.done()
+      }
+    },
     handleRouter (code) {
       this.$router.push({ path: `/app-vue-demo${code}` })
     },

@@ -6,7 +6,6 @@
 import router from './router'
 import store from './store'
 import NProgress from 'nprogress' // progress bar
-import 'nprogress/nprogress.css' // progress bar style
 import defaultSettings from './defaultSettings'
 import { handleApp, handleAppMenu } from '@/api/system'
 import BaseLayout from '@/layout/BaseLayout'
