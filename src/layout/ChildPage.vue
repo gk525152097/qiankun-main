@@ -41,7 +41,7 @@ export default {
     handleInitChildApp () {
       this.microApp = ''
       this.$nextTick(() => {
-        window._CHIlD_BASE_PATH__ = `/${this.$route.meta.appName}`
+        window.__CHIlD_BASE_PATH__ = `/${this.$route.meta.appName}`
         this.microApp = loadMicroApp({
           name: this.$route.meta.appName,
           entry: this.$route.meta.entry,
@@ -69,7 +69,7 @@ export default {
           })
         this.microApp.mountPromise
           .then(res => {
-            window._CHIlD_BASE_PATH__ = ''
+            window.__CHIlD_BASE_PATH__ = ''
           })
       })
     }
